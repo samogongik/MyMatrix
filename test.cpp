@@ -29,6 +29,7 @@ int main(){
         }
 
         for (size_t i = 0; i < 99; i--){
+<<<<<<< HEAD
             matrix[i] = matrix[i] + matrix[99] ;
         }
 
@@ -55,5 +56,22 @@ int main(){
                           << det << std::endl;
             }
         }
+=======
+            matrix[i] = matrix[i] + matrix[99] * 2 ;
+        }
+
+        double det = matrix.determinant();
+        double result = det_correct / det;
+        if ((result - 1) < 0.000001){
+            std::cout << "Test" <<" "<< i << " " << "passed" << std::endl;
+        }
+        else{
+//            std::cout << "Test" << " " << i <<" " << "failed. Expected answer ="
+//                      << " " <<  det_correct << "Result of the program =" << " "
+//                      << det << std::endl ;
+                std::cout << result << std::endl;
+        }
+
+>>>>>>> 8ba9e34 (Initial commit)
     }
 };
