@@ -29,34 +29,7 @@ int main(){
         }
 
         for (size_t i = 0; i < 99; i--){
-<<<<<<< HEAD
-            matrix[i] = matrix[i] + matrix[99] ;
-        }
 
-        double det = matrix.determinant();
-        if (abs(det) < 0.0001){
-            if (abs(det - det_correct < 0.0001)){
-                std::cout << "Test" <<" "<< i << " " << "passed" << std::endl;
-            }
-            else{
-                std::cout << "Test" << " " << i <<" " << "failed. Expected answer ="
-                          << " " <<  det_correct << "Result of the program =" << " "
-                          << det << std::endl;
-            }
-        }
-        else{
-            double delta = abs(det / det_correct);
-
-            if (abs(1 - delta) < 0.0001){
-                std::cout << "Test" <<" "<< i << " " << "passed" << std::endl;
-            }
-            else{
-                std::cout << "Test" << " " << i <<" " << "failed. Expected answer ="
-                          << " " <<  det_correct << "Result of the program =" << " "
-                          << det << std::endl;
-            }
-        }
-=======
             matrix[i] = matrix[i] + matrix[99] * 2 ;
         }
 
@@ -72,6 +45,6 @@ int main(){
                 std::cout << result << std::endl;
         }
 
->>>>>>> 8ba9e34 (Initial commit)
+
     }
 };
