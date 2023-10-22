@@ -39,10 +39,10 @@ int main(){
             std::cout << "Test" <<" "<< i << " " << "passed" << std::endl;
         }
         else{
-//            std::cout << "Test" << " " << i <<" " << "failed. Expected answer ="
-//                      << " " <<  det_correct << "Result of the program =" << " "
-//                      << det << std::endl ;
-                std::cout << result << std::endl;
+            std::cout << "Test" << " " << i <<" " << "failed. Expected answer ="
+                      << " " <<  det_correct << "Result of the program =" << " "
+                      << det << std::endl ;
+
         }
 
 

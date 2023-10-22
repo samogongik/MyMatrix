@@ -42,7 +42,6 @@ namespace matrix_template {
         Vector operator+(const Vector &vec) const {
             if (vec.Size() != data.size()) {
                 std::cerr << "error: trying to add objects of different sizes" << std::endl;
-                exit(0);
             }
 
             std::vector<T> res(Size());
@@ -57,7 +56,6 @@ namespace matrix_template {
 
             if (vec.Size() != data.size()) {
                 std::cerr << "error: trying to subtract objects of different sizes" << std::endl;
-                exit(0);
             }
 
             std::vector<T> res(Size());
@@ -75,10 +73,9 @@ namespace matrix_template {
             return Vector(res);
         }
 
-        Vector operator/(const T &num) {
+        Vector operator/(const T &num) const {
             if (num == 0) {
                 std::cerr << "error: attempt to divide by zero" << std::endl;
-                exit(0);
             }
 
             std::vector<T> res;
@@ -127,8 +124,7 @@ namespace matrix_template {
 
         Matrix operator+(const Matrix &rhs) const {
             if (rhs.Size() != data.size() || rhs[0].Size() != data[0].Size()) {
-                std::cout << "error: attempt to add matrices of different sizes" << std::endl;
-                exit(0);
+                std::cerr << "error: attempt to add matrices of different sizes" << std::endl;
             }
 
             Matrix result(size_x, size_y);
@@ -141,8 +137,7 @@ namespace matrix_template {
         Matrix operator-(const Matrix &rhs) const {
 
             if ((rhs.Size() != size_x) && (rhs[0].Size() != size_y)) {
-                std::cout << "error: attempt to subtract matrices of different sizes" << std::endl;
-                exit(0);
+                std::cerr << "error: attempt to subtract matrices of different sizes" << std::endl;
             }
 
             Matrix result(size_x, size_y);
@@ -160,10 +155,9 @@ namespace matrix_template {
             return result;
         }
 
-        Matrix operator*(const Matrix &rhs) {
+        Matrix operator*(const Matrix &rhs) const {
             if (size_y != rhs.Size()) {
-                std::cout << "error: attempt to multiply inconsistent matrices" << std::endl;
-                exit(0);
+                std::cerr << "error: attempt to multiply inconsistent matrices" << std::endl;
             }
 
             Matrix<T> result(size_x, rhs[0].Size());
@@ -181,41 +175,48 @@ namespace matrix_template {
             return result;
         }
 
-        double determinant() {
+        double determinant() const {
 
             if (size_y != size_x) {
-                std::cout << "error:attempt to calculate the determinant of a non-square matrix" << std::endl;
-                exit(0);
+                std::cerr << "error:attempt to calculate the determinant of a non-square matrix" << std::endl;
             }
 
-            const unsigned int n = size_y;
+            const unsigned int n = size_x;
             double det = 1.0;
 
+            matrix_template::Matrix<T> data_copy(size_x, size_y);
+
+            for (int i = 0; i < n; i++){
+                for (int j = 0; j < n; j++){
+                    data_copy[i][j] = data[i][j];
+                }
+            }
+
             for (int i = 0; i < n; i++) {
-                auto max_el = data[i][i];
+                auto max_el = data_copy[i][i];
                 int index = i;
 
                 for (int j = i; j < n; j++) {
-                    if (abs(data[j][i]) > abs(max_el)) {
-                        max_el = data[j][i];
+                    if (abs(data_copy[j][i]) > abs(max_el)) {
+                        max_el = data_copy[j][i];
                         index = j;
                     }
                 }
 
                 if (index != i) {
                     det = det * (-1);
-                    Vector<T> vec = data[i];
-                    data[i] = data[index];
-                    data[index] = vec;
+                    Vector<T> vec = data_copy[i];
+                    data_copy[i] = data_copy[index];
+                    data_copy[index] = vec;
                 }
 
                 for (int j = i + 1; j < n; j++) {
-                    if (data[i][i] == 0) return 0.0;
-                    auto factor = data[j][i] / data[i][i];
-                    data[j] = data[j] - data[i] * factor;
+                    if (data_copy[i][i] == 0) return 0.0;
+                    auto factor = data_copy[j][i] / data_copy[i][i];
+                    data_copy[j] = data_copy[j] - data_copy[i] * factor;
                 }
 
-                det = det * data[i][i];
+                det = det * data_copy[i][i];
 
             }
             return det;
@@ -223,8 +224,7 @@ namespace matrix_template {
 
         void transpose(Matrix &matrix) {
             if (size_y != size_x) {
-                std::cout << "error:attempt to transpose a non-square matrix" << std::endl;
-                exit(0);
+                std::cerr << "error:attempt to transpose a non-square matrix" << std::endl;
             }
 
             for (int i = 0; i < size_x; i++) {
