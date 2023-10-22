@@ -52,17 +52,20 @@ namespace matrix_template {
             return Vector(res);
         }
 
-        Vector operator-(const Vector &vec) const {
+        Vector operator-() const {
+            std::vector<T> result(Size());
+            for (int i = 0; i < Size(); i++) {
+                result[i] = -data[i];
+            }
+            return Vector(result);
+        }
 
+        Vector operator-(const Vector &vec) const {
             if (vec.Size() != data.size()) {
                 std::cerr << "error: trying to subtract objects of different sizes" << std::endl;
             }
 
-            std::vector<T> res(Size());
-            for (int i = 0; i < Size(); i++) {
-                res[i] = data[i] - vec[i];
-            }
-            return Vector(res);
+            return (*this) + (-vec);
         }
 
         Vector operator*(const T &num) const {
@@ -134,17 +137,21 @@ namespace matrix_template {
             return result;
         }
 
+        Matrix operator-() const{
+            matrix_template::Matrix<T> result(size_x,size_y);
+            for (int i = 0; i < size_x; i++){
+                result[i] = -data[i];
+            }
+
+            return result;
+        }
         Matrix operator-(const Matrix &rhs) const {
 
             if ((rhs.Size() != size_x) && (rhs[0].Size() != size_y)) {
                 std::cerr << "error: attempt to subtract matrices of different sizes" << std::endl;
             }
 
-            Matrix result(size_x, size_y);
-            for (size_t i = 0; i < size_x; i++) {
-                result[i] = data[i] - rhs[i];
-            }
-            return result;
+            return (*this) + (-rhs);
         }
 
         Matrix operator*(const T &num) const {
