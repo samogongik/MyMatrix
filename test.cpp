@@ -5,8 +5,8 @@ int main(){
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    double min = -200.0;
-    double max = 200.0;
+    double min = -20.0;
+    double max = 20.0;
 
     std::uniform_real_distribution<double> distribution_real(min, max);
 
