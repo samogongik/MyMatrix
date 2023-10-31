@@ -26,7 +26,9 @@ namespace matrix_template {
     public:
         Vector(const T* arr, const size_t size_x): Vector(size_x){
             if (arr) {
-                std::memcpy(data, arr, sizeof(T) * size_x);
+                for (size_t i = 0; i < size_x; i++){
+                    data[i] = arr[i];
+                }
             }
         }
 
@@ -139,7 +141,9 @@ namespace matrix_template {
     public:
         Matrix(Vector<T> *arr, size_t size_x, size_t size_y) : Matrix(size_x, size_y) {
             if (arr) {
-                std::memcpy(data, arr, sizeof(Vector<T>) * size_y);
+                for (size_t i = 0; i < size_y; i++){
+                    data[i] = arr[i];
+                }
             }
         }
 
@@ -149,6 +153,9 @@ namespace matrix_template {
                 for (size_t i = 0; i < size_y; i++) {
                     data[i] = Vector<T>(size_x);
                 }
+            }
+            else{
+                std::cerr << "attempt create matrix of zero size" << std::endl;
             }
         }
 
@@ -248,11 +255,12 @@ namespace matrix_template {
             const unsigned int n = size_x;
             double det = 1.0;
 
-            matrix_template::Matrix<T> data_copy(size_x, size_y);
+            matrix_template::Matrix<double> data_copy(size_x, size_y);
 
             for (int i = 0; i < n; i++){
                 for (int j = 0; j < n; j++){
-                    data_copy[i][j] = data[i][j];
+                    data_copy[i][j] = static_cast<double>(data[i][j]);;
+
                 }
             }
 
@@ -261,7 +269,7 @@ namespace matrix_template {
                 int index = i;
 
                 for (int j = i; j < n; j++) {
-                    if (abs(data_copy[j][i]) > abs(max_el)) {
+                    if (fabs(data_copy[j][i]) > fabs(max_el)) {
                         max_el = data_copy[j][i];
                         index = j;
                     }
@@ -269,7 +277,7 @@ namespace matrix_template {
 
                 if (index != i) {
                     det = det * (-1);
-                    Vector<T> vec = data_copy[i];
+                    Vector<double> vec = data_copy[i];
                     data_copy[i] = data_copy[index];
                     data_copy[index] = vec;
                 }
