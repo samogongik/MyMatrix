@@ -3,11 +3,11 @@ project(MyMatrix)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(MyMatrix matrix.hpp
+add_executable(MyMatrix matrix.hpp Vector.hpp
         matrix_main.cpp)
 
 
-add_executable(TestMyMatrix matrix.hpp
+add_executable(TestMyMatrix matrix.hpp Vector.hpp
         test.cpp)
 
 
