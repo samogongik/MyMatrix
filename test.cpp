@@ -5,12 +5,19 @@ int main(){
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    std::cout << "Test for intenger numbers:" << std::endl;
-    std::uniform_int_distribution<int> distribution_int(-100, 100);
+    std::cout << "Input tests" << std::endl;
+    for (int i = 1; i < 5; i++){
+        matrix_template::Matrix<double> matrix1(i, 0);
+        matrix_template::Matrix<double> matrix2(0, i);
+        matrix_template::Matrix<double> matrix3(0, 0);
+    }
 
-    for (size_t kol = 1; kol <= 100; kol++){
+    std::cout << "Test for intenger numbers:" << std::endl;
+    std::uniform_int_distribution<int> distribution_int(-10, 10);
+
+    for (size_t kol = 1; kol < 100; kol++){
         matrix_template::Matrix<int> matrix1(100,100);
-        double det_correct1 = 1;
+        double det_correct1 = 1.0;
 
         for (size_t j = 0; j < 99; j++){
             for (size_t k = 0; k < 99; k++ ){
@@ -22,7 +29,7 @@ int main(){
             }
         }
 
-        for (size_t i = 0; i < 99; i++){
+        for (size_t i = 0; i < 99; i++) {
             matrix1[i+1] = matrix1[i+1] + matrix1[i];
         }
 

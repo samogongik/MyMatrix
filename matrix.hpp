@@ -47,7 +47,10 @@ namespace matrix_template {
         Vector(Vector&& rhs): data(std::exchange(rhs.data, nullptr)), size_x(rhs.size_x){}
 
         Vector& operator=(const Vector& rhs){
-            return *this = Vector(rhs);
+            for(size_t i = 0; i < size_x; i++) {
+                data[i] = rhs[i];
+            }
+            return *this;
         }
 
         Vector& operator=(Vector&& rhs){
@@ -148,7 +151,7 @@ namespace matrix_template {
         }
 
         Matrix(size_t size_x, size_t size_y) : size_x(size_x), size_y(size_y) {
-            if (size_y) {
+            if (size_y && size_x) {
                 data = new Vector<T>[size_y];
                 for (size_t i = 0; i < size_y; i++) {
                     data[i] = Vector<T>(size_x);
@@ -168,7 +171,10 @@ namespace matrix_template {
         Matrix(Matrix&& rhs): data(std::exchange(rhs.data, nullptr)), size_x(rhs.size_x), size_y(rhs.size_y){}
 
         Matrix& operator=(const Matrix& rhs){
-            return *this = Matrix(rhs);
+            for (size_t i = 0; i < size_y; i++) {
+                data[i] = rhs[i];
+            }
+            return *this;
         }
 
         Matrix& operator=(Matrix&& rhs){
@@ -255,8 +261,7 @@ namespace matrix_template {
             const unsigned int n = size_x;
             double det = 1.0;
 
-            matrix_template::Matrix<double> data_copy(size_x, size_y);
-
+            Matrix<double> data_copy(size_x, size_y);
             for (int i = 0; i < n; i++){
                 for (int j = 0; j < n; j++){
                     data_copy[i][j] = static_cast<double>(data[i][j]);;
@@ -283,7 +288,7 @@ namespace matrix_template {
                 }
 
                 for (int j = i + 1; j < n; j++) {
-                    if (data_copy[i][i] == 0) return 0.0;
+                    if (data_copy[i][i] == 0.0) return 0.0;
                     auto factor = data_copy[j][i] / data_copy[i][i];
                     data_copy[j] = data_copy[j] - data_copy[i] * factor;
                 }
