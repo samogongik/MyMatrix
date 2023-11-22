@@ -46,7 +46,12 @@ namespace matrix_template {
         Vector(Vector&& rhs): data(std::exchange(rhs.data, nullptr)), size_x(rhs.size_x){}
 
         Vector& operator=(const Vector& rhs){
-            for(size_t i = 0; i < size_x; i++) {
+            if (size_x != rhs.size_x) {
+                delete[] data;
+                size_x = rhs.size_x;
+                data = new T[size_x];
+            }
+            for(size_t i = 0; i < rhs.size_x; i++) {
                 data[i] = rhs[i];
             }
             return *this;

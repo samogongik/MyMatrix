@@ -38,6 +38,17 @@ namespace matrix_template {
         Matrix(Matrix&& rhs): data(std::exchange(rhs.data, nullptr)), size_x(rhs.size_x), size_y(rhs.size_y){}
 
         Matrix& operator=(const Matrix& rhs){
+            if (size_y != rhs.size_y) {
+                delete[] data;
+                size_y = rhs.size_y;
+                data = new Vector<T>[size_y];
+
+                for (size_t i = 0; i < size_y; i++) {
+                    data[i] = Vector<T>(size_x);
+                }
+
+            }
+
             for (size_t i = 0; i < size_y; i++) {
                 data[i] = rhs[i];
             }

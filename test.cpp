@@ -5,6 +5,47 @@ int main(){
     std::random_device rd;
     std::mt19937 gen(rd());
 
+    std::cout << "Copy tests" << std::endl;
+
+    for (int i = 1; i < 5; i++) {
+        std::uniform_int_distribution<int> distribution_int(1, 5);
+        std::uniform_real_distribution<double> distribution_real(-20.0, 20.0);
+        int x1 = distribution_int(gen);
+        int x2 = distribution_int(gen);
+
+        matrix_template::Matrix<double> matrix1(3, 3);
+        matrix_template::Matrix<double> matrix2(2, 2);
+
+        for (size_t i = 0; i < 3; i++) {
+            for (size_t j = 0; j < 3; j++) {
+                matrix1[i][j] = distribution_real(gen);
+            }
+        }
+        for (size_t i = 0; i < 2; i++) {
+            for (size_t j = 0; j < 2; j++) {
+                matrix2[i][j] = distribution_real(gen);
+            }
+        }
+
+        matrix1 = matrix2;
+        for (size_t i = 0; i < 2; i++) {
+            for (size_t j = 0; j < 2; j++) {
+                std::cout << matrix2[i][j] << " ";
+            }
+            std:: cout << std::endl;
+        }
+
+        matrix1 = matrix2;
+        for (size_t i = 0; i < 2; i++) {
+            for (size_t j = 0; j < 2; j++) {
+                std::cout << matrix2[i][j] << " ";
+            }
+            std:: cout << std::endl;
+        }
+
+        std::cout << std::endl;
+    }
+
     std::cout << "Input tests" << std::endl;
     for (int i = 1; i < 5; i++){
         matrix_template::Matrix<double> matrix1(i, 0);
